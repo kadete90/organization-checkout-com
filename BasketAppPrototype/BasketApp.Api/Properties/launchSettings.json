@@ -2,25 +2,25 @@
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
+    "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:2592",
-      "sslPort": 44395
+      "applicationUrl": "http://localhost:7930",
+      "sslPort": 44341
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/basket",
+      "launchUrl": "api/home",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "BasketWebApp": {
+    "BasketApp.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/basket",
+      "launchUrl": "api/home",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
