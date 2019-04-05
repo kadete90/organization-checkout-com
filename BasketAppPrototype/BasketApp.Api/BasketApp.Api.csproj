@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.2" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BasketApi.Models\BasketApi.Common.csproj" />
+  </ItemGroup>
+
 </Project>

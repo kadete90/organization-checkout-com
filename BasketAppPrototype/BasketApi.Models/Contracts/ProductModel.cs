@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace BasketApp.Api.Models
+namespace BasketApi.Common.Contracts
 {
     public class ProductModel
     {

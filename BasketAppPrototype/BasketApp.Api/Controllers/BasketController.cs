@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BasketApp.Api.Models;
+using BasketApi.Common.Contracts;
 using BasketApp.Api.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

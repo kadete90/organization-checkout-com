@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BasketApi.Common;
 using BasketApp.Api.Data;
 using BasketApp.Api.Data.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,6 @@ namespace BasketApp.Api
     public static class SeedData
     {
         const string TesterRole = "Administrator";
-        const string TesterUserName = "testUser";
 
         public static async Task InitializeAsync(IServiceProvider services)
         {
@@ -40,7 +40,7 @@ namespace BasketApp.Api
 
         private static async Task EnsureTestAdminAsync(UserManager<IdentityUser> userManager)
         {
-            var tester = await userManager.Users.Where(x => x.UserName == TesterUserName).SingleOrDefaultAsync();
+            var tester = await userManager.Users.Where(x => x.UserName == TestConstants.TesterUserName).SingleOrDefaultAsync();
             if (tester != null)
             {
                 return;
@@ -48,12 +48,12 @@ namespace BasketApp.Api
 
             tester = new IdentityUser
             {
-                UserName = TesterUserName,
-                Email = TesterUserName,
+                UserName = TestConstants.TesterUserName,
+                Email = TestConstants.TesterEmail,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            IdentityResult user = await userManager.CreateAsync(tester, "testPw1!");
+            IdentityResult user = await userManager.CreateAsync(tester, TestConstants.TesterPassword);
 
             if (!user.Succeeded)
             {

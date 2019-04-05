@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace BasketApp.Api.Models
+namespace BasketApi.Common.Contracts
 {
     public class BasketItemsModel
     {

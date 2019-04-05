@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using BasketApp.Api.Models;
+using BasketApi.Common.Contracts;
 using BasketApp.Api.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +21,11 @@ namespace BasketApp.Api.Controllers
         [AllowAnonymous]
         [Route("token")]
 
-        public async Task<IActionResult> GetToken([FromBody] LoginModel loginModel)
+        public async Task<IActionResult> GetToken([FromBody] CredentialsModel model)
         {
             if (ModelState.IsValid)
             {
-                var token = await _userService.GetTokenAsync(loginModel.Username, loginModel.Password);
+                var token = await _userService.GetTokenAsync(model.Username, model.Password);
 
                 if (token == null)
                 {

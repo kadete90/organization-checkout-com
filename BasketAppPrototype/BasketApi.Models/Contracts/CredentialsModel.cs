@@ -1,6 +1,6 @@
-﻿namespace BasketApp.Api.Models
+﻿namespace BasketApi.Common.Contracts
 {
-    public class LoginModel
+    public class CredentialsModel
     {
         public string Username { get; set; }
         public string Password { get; set; }
