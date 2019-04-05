@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BasketApp.Api.Data;
+using BasketApp.Api.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +22,9 @@ namespace BasketApp.Api
 
             var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
             await EnsureTestAdminAsync(userManager);
+
+            var context = services.GetRequiredService<ApplicationDbContext>();
+            await SeedProductsAsync(context);
         }
 
         private static async Task EnsureRolesAsync(RoleManager<IdentityRole> roleManager)
@@ -56,5 +62,28 @@ namespace BasketApp.Api
 
             await userManager.AddToRoleAsync(tester, TesterRole);
         }
+
+        private static async Task SeedProductsAsync(ApplicationDbContext context)
+        {
+            List<Product> products = new List<Product>
+            {
+                new Product { Id = Guid.NewGuid(), Name = "Milk", Price = 4.00 },
+                new Product { Id = Guid.NewGuid(), Name = "Orange", Price = 2.00 },
+                new Product { Id = Guid.NewGuid(), Name = "Chocolate", Price = 3.00 },
+                new Product { Id = Guid.NewGuid(), Name = "Cookies", Price = 5.50 },
+                new Product { Id = Guid.NewGuid(), Name = "Bread", Price = 1.00 }
+            };
+
+            foreach (var product in products)
+            {
+                if (!await context.Products.AnyAsync(p => p.Name == product.Name))
+                {
+                    await context.Products.AddAsync(product);
+                }
+            }
+
+            await context.SaveChangesAsync();
+        }
+
     }
 }

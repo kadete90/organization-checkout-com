@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BasketApp.Api.Models
+﻿namespace BasketApp.Api.Models
 {
     public class LoginModel
     {

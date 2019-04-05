@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BasketApp.Api.Migrations
+namespace BasketApp.Api.Data.Migrations
 {
     public partial class initCreate : Migration
     {

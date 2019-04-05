@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BasketApp.Api.Models;
 using BasketApp.Api.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BasketApp.Api.Controllers
@@ -17,7 +18,9 @@ namespace BasketApp.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("token")]
+
         public async Task<IActionResult> GetToken([FromBody] LoginModel loginModel)
         {
             if (ModelState.IsValid)
@@ -29,7 +32,10 @@ namespace BasketApp.Api.Controllers
                     return BadRequest("Invalid Username or password");
                 }
 
-                return Ok(token);
+                return Ok(new {
+                    authenticated = true,
+                    token = token
+                });
             }
             return BadRequest(ModelState);
         }
