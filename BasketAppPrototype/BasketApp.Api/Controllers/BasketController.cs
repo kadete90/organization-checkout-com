@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BasketApi.Common.Contracts;
+using BasketApp.Common.Contracts;
 using BasketApp.Api.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,7 +25,7 @@ namespace BasketApp.Api.Controllers
 
         // GET api/basket
         [HttpGet]
-        [ProducesResponseType(typeof(BasketItemsModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BasketModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Get()
         {
@@ -42,7 +42,7 @@ namespace BasketApp.Api.Controllers
         [HttpPost("items")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AddItemToBasket([FromBody] ProductAmountModel model)
+        public async Task<IActionResult> AddItemToBasket([FromBody] ProductUpdateModel model)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null)
@@ -50,7 +50,7 @@ namespace BasketApp.Api.Controllers
                 return Challenge();
             }
 
-            var result = await _basketService.AddOrUpdateItemAsync(model.ProductId, model.Amount, currentUser);
+            var result = await _basketService.AddOrUpdateItemAsync(model.Id, model.Amount, currentUser);
             if (result == null)
             {
                 return NotFound("This item doesn't exist");
@@ -63,8 +63,13 @@ namespace BasketApp.Api.Controllers
         [HttpPut("items/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateItemAmountInBasket(Guid id, [FromBody] ProductUpdateAmountModel model)
+        public async Task<IActionResult> UpdateItemAmountInBasket(Guid id, [FromBody] ProductUpdateModel model)
         {
+            if(id != model.Id)
+            {
+                return BadRequest();
+            }
+
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null)
             {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BasketApi.Common.Contracts;
+using BasketApp.Common.Contracts;
 using BasketApp.Api.Data;
 using BasketApp.Api.Data.Entities;
 using BasketApp.Api.Utils;
@@ -12,7 +12,7 @@ namespace BasketApp.Api.Service
 {
     public interface IBasketService
     {
-        Task<BasketItemsModel> GetAsync(IdentityUser user);
+        Task<BasketModel> GetAsync(IdentityUser user);
 
         Task<bool?> AddOrUpdateItemAsync(Guid itemId, int amount, IdentityUser user);
 
@@ -30,12 +30,12 @@ namespace BasketApp.Api.Service
             _context = context;
         }
 
-        public async Task<BasketItemsModel> GetAsync(IdentityUser user)
+        public async Task<BasketModel> GetAsync(IdentityUser user)
         {            
             var userBasket = await _getBasketAsync(user.Id);
 
             return userBasket == null 
-                ? new BasketItemsModel()
+                ? new BasketModel()
                 : userBasket.ToModel();
         }
 

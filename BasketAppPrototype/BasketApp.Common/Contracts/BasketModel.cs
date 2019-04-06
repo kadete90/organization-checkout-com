@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace BasketApi.Common.Contracts
+namespace BasketApp.Common.Contracts
 {
-    public class BasketItemsModel
+    public class BasketModel
     {
         [JsonProperty(Order = 0)]
         public double Total { get; set; }

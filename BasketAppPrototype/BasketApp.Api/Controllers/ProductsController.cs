@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using BasketApi.Common.Contracts;
+using BasketApp.Common.Contracts;
 using BasketApp.Api.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +26,6 @@ namespace BasketApp.Api.Controllers
 
         // GET api/products
         [HttpGet]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(IEnumerable<ProductModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {

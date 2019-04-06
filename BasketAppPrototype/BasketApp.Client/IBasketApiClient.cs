@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Net.Http;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using BasketApi.Common.Contracts;
+using BasketApp.Common.Contracts;
 
 namespace BasketApp.Client
 {
@@ -9,10 +9,12 @@ namespace BasketApp.Client
     {
         Task<bool> AuthenticateAsync(string username, string password);
 
-        Task<BasketItemsModel> GetUserBasket();
-        Task AddItemToBasket(string basketId, ProductModel item);
-        Task UpdateItemAmountInBasket(string basketId, ProductAmountModel item);
+        Task<IEnumerable<ProductModel>> GetProductsAsync();
+
+        Task<BasketModel> GetUserBasket();
+        Task AddItemToBasket(ProductUpdateModel item);
+        Task UpdateItemAmountInBasket(ProductUpdateModel item);
         Task RemoveItemFromBasketAsync(Guid itemId);
-        Task ClearBasketAsync(string basketId);
+        Task ClearBasketAsync();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace BasketApi.Common.Contracts
+﻿namespace BasketApp.Common.Contracts
 {
     public class CredentialsModel
     {

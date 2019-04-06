@@ -1,12 +1,12 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace BasketApi.Common.Contracts
+namespace BasketApp.Common.Contracts
 {
     public class ProductModel
     {
-        [JsonProperty(Order = 0)]
-        public Guid ProductId { get; set; }
+        [JsonProperty(Order = 0, PropertyName = "ProductId")]
+        public Guid Id { get; set; }
 
         [JsonProperty(Order = 1)]
         public string Name { get; set; }
@@ -21,8 +21,12 @@ namespace BasketApi.Common.Contracts
         public int Amount { get; set; }
     }
 
-    public class ProductUpdateAmountModel
+    public class ProductUpdateModel
     {
+        [JsonProperty(Order = 0, PropertyName = "ProductId")]
+        public Guid Id { get; set; }
+
+        [JsonProperty(Order = 2)]
         public int Amount { get; set; }
     }
 }

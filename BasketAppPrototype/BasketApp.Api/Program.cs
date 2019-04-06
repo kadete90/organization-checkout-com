@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace BasketApp.Api
 {
@@ -29,9 +30,8 @@ namespace BasketApp.Api
                 }
                 catch (Exception ex)
                 {
-                    //var logger = services.GetRequiredService<ILogger<Program>>();
-                    //logger.LogError(ex, "Error occurred seeding the DB.");
-                    throw ex;
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Error occurred seeding the DB.");
                 }
             }
         }

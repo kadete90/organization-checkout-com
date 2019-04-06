@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "BasketApp.IntegrationTests": {
+      "commandName": "Project"
+    }
+  }
+}

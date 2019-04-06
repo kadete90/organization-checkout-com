@@ -2,7 +2,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using BasketApp.Api.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -10,35 +9,23 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace BasketApp.Api.Service
 {
-    public interface IUserService
+    public interface IAccountService
     {
-        Task<string> GetTokenAsync(string username, string password);
+        string GenerateToken(IdentityUser user);
     }
 
-    public class UserService : IUserService
+    public class AccountService : IAccountService
     {
-        readonly UserManager<IdentityUser> _userManager;
-        readonly SignInManager<IdentityUser> _signInManager;
 
         private readonly AppSettings _appSettings;
 
-        public UserService(IOptions<AppSettings> appSettings, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountService(IOptions<AppSettings> appSettings)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
             _appSettings = appSettings.Value;
         }
 
-        public async Task<string> GetTokenAsync(string username, string password)
+        public string GenerateToken(IdentityUser user)
         {
-            var loginResult = await _signInManager.PasswordSignInAsync(username, password, false, false);
-            if (!loginResult.Succeeded)
-                return null;
-
-            var user = await _userManager.FindByNameAsync(username);
-            if (user == null)
-                return null;
-
             var utcNow = DateTime.UtcNow;
 
             var claims = new Claim[]

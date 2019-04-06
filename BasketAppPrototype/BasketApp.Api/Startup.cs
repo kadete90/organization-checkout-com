@@ -71,7 +71,7 @@ namespace BasketApp.Api
                     };
                 });
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IBasketService, BasketService>();
         }
 
