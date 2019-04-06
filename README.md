@@ -38,3 +38,6 @@ _The follow calls requires previous authentication/authorization_
 * UpdateItemAmountInBasket: update amount of a determinated item in the user basket
 * RemoveItemFromBasketAsync: remove determinated item (no matter the amount) from the user basket
 * ClearBasketAsync: clear all items from the user basket
+
+## Postman [manual example tests]
+* https://www.getpostman.com/collections/eeee34352a96e89533ee
