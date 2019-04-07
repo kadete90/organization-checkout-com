@@ -10,7 +10,8 @@
 * Create a client library that makes use of the API endpoints.  The purpose of this code to provide authors of client applications a simple framework to use in their applications.
 
 ## Projects in the solution
-* BasketApp.Api - Prototype Basket REST API (with DAL)
+* BasketApp.Api - Prototype Basket REST API
+* BasketApp.DAL - EF core code first with Migrations 
 * BasketApp.Client - .NET client
 * BasketApp.Common - contracts and common utilities
 * BasketApp.IntegrationTests - simple integration tests with the use of BasketApp.Client
