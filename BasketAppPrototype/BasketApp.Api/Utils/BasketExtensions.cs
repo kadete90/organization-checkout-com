@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using BasketApp.Common.Contracts;
-using BasketApp.Api.Data.Entities;
+using BasketApp.Api.DAL.Entities;
 
 namespace BasketApp.Api.Utils
 {

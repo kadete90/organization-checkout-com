@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BasketApp.Common.Contracts;
-using BasketApp.Api.Data;
-using BasketApp.Api.Data.Entities;
+using BasketApp.Api.DAL;
+using BasketApp.Api.DAL.Entities;
 using BasketApp.Api.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

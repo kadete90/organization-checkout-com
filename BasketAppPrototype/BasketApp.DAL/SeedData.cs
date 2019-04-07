@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BasketApp.Common;
-using BasketApp.Api.Data;
-using BasketApp.Api.Data.Entities;
+using BasketApp.Api.DAL;
+using BasketApp.Api.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
-namespace BasketApp.Api
+namespace BasketApp.DAL
 {
     public static class SeedData
     {
@@ -18,25 +17,14 @@ namespace BasketApp.Api
 
         public static async Task InitializeAsync(IServiceProvider services)
         {
-            var logger = services.GetRequiredService<ILogger<Program>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            await EnsureRolesAsync(roleManager);
 
-            try
-            {
-                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                await EnsureRolesAsync(roleManager);
+            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            await EnsureTestAdminAsync(userManager);
 
-                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-                await EnsureTestAdminAsync(userManager);
-
-                var context = services.GetRequiredService<ApplicationDbContext>();
-                await SeedProductsAsync(context);
-
-                logger.LogInformation("Seeded the database.");
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e, "Error seeding database");
-            }
+            var context = services.GetRequiredService<ApplicationDbContext>();
+            await SeedProductsAsync(context);
         }
 
         private static async Task EnsureRolesAsync(RoleManager<IdentityRole> roleManager)

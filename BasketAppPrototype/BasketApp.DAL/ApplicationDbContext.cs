@@ -1,15 +1,28 @@
-﻿using System;
-using BasketApp.Api.Data.Entities;
+﻿using BasketApp.Api.DAL.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
-namespace BasketApp.Api.Data
+namespace BasketApp.Api.DAL
 {
-    public partial class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
+        private IConfiguration _configuration;
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+        {
+        }
+
+        public ApplicationDbContext(IConfiguration configuration)
+        {
+            this._configuration = configuration;
+        }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
             : base(options)
         {
+            this._configuration = configuration;
         }
 
         public DbSet<Basket> Baskets { get; set; }
@@ -19,6 +32,7 @@ namespace BasketApp.Api.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseSqlite(_configuration.GetConnectionString("DefaultConnection"));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -26,12 +40,6 @@ namespace BasketApp.Api.Data
             base.OnModelCreating(builder);
 
             builder.Entity<BasketProducts>().HasKey(x => new { x.BasketId, x.ProductId });
-
-            //builder.Entity<Product>().HasData(new Product { Id = Guid.NewGuid(), Name = "Milk", Price = 4.00 });
-            //builder.Entity<Product>().HasData(new Product { Id = Guid.NewGuid(), Name = "Orange", Price = 2.00 });
-            //builder.Entity<Product>().HasData(new Product { Id = Guid.NewGuid(), Name = "Chocolate", Price = 3.00 });
-            //builder.Entity<Product>().HasData(new Product { Id = Guid.NewGuid(), Name = "Cookies", Price = 5.50 });
-            //builder.Entity<Product>().HasData(new Product { Id = Guid.NewGuid(), Name = "Bread", Price = 1.00 });
         }
     }
 }

@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketApp.IntegrationTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketApp.Client", "BasketApp.Client\BasketApp.Client.csproj", "{F31B287A-5644-4134-8825-8512AF850778}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketApp.Api", "BasketApp.Api\BasketApp.Api.csproj", "{7988EAEA-BD2E-4307-9A23-8BED045ED038}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketApp.Api", "BasketApp.Api\BasketApp.Api.csproj", "{7988EAEA-BD2E-4307-9A23-8BED045ED038}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketApp.Common", "BasketApp.Common\BasketApp.Common.csproj", "{6E9A5EDA-9213-4BC0-9220-15C0463CC20C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketApp.Common", "BasketApp.Common\BasketApp.Common.csproj", "{6E9A5EDA-9213-4BC0-9220-15C0463CC20C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketApp.DAL", "BasketApp.DAL\BasketApp.DAL.csproj", "{37A6C58E-13BF-4464-ACD0-7F30FF5E454F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6E9A5EDA-9213-4BC0-9220-15C0463CC20C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E9A5EDA-9213-4BC0-9220-15C0463CC20C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E9A5EDA-9213-4BC0-9220-15C0463CC20C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37A6C58E-13BF-4464-ACD0-7F30FF5E454F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37A6C58E-13BF-4464-ACD0-7F30FF5E454F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37A6C58E-13BF-4464-ACD0-7F30FF5E454F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37A6C58E-13BF-4464-ACD0-7F30FF5E454F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

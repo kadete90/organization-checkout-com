@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BasketApp.Api.Data.Entities
+namespace BasketApp.Api.DAL.Entities
 {
     public class Product
     {

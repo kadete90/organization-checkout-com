@@ -1,4 +1,4 @@
-﻿namespace BasketApp.Api.Helpers
+﻿namespace BasketApp.Common.Contracts.Settings
 {
     public class AppSettings
     {
