@@ -9,16 +9,6 @@ namespace BasketApp.DAL
     {
         private IConfiguration _configuration;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-        {
-        }
-
-        public ApplicationDbContext(IConfiguration configuration)
-        {
-            this._configuration = configuration;
-        }
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
             : base(options)
         {

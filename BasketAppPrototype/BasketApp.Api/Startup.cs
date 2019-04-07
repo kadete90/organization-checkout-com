@@ -42,9 +42,10 @@ namespace BasketApp.Api
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddAutoMapper();
+            services.AddDbContext<ApplicationDbContext>()
+                .AddEntityFrameworkProxies();
 
-            services.AddDbContext<ApplicationDbContext>();
+            services.AddAutoMapper();
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

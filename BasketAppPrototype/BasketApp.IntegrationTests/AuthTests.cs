@@ -2,53 +2,32 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BasketApp.Client;
 using BasketApp.Common;
-using System;
 using Xunit;
+using System;
 
 namespace BasketApp.IntegrationTests
 {
-    public class AuthTests
-        //: IClassFixture<CustomWebApplicationFactory<BasketApp.Api.Startup>>
+    public class AuthTests 
+        //: IClassFixture<CustomWebApplicationFactory<Api.Startup>>
     {
+        //private readonly CustomWebApplicationFactory<Api.Startup> _factory;
+        //public AuthTests(CustomWebApplicationFactory<Api.Startup> factory)
+        //{
+        //    _factory = factory;
+        //}
+
         public static readonly Uri BaseHttpsUrl = new Uri(TestConstants.BaseApiAddress);
-        //private readonly HttpClient _client;
-        //private readonly CustomWebApplicationFactory<BasketApp.Api.Startup> _factory;
+        readonly BasketApiClient apiClient;
 
         public AuthTests()
         {
-            // TODO : find the proper way of doing this
-            //var projectDir = Path.Combine(Path.GetFullPath("../../../../BasketApp.Api"));
-
-            //var server = new TestServer(
-            //    new WebHostBuilder()
-            //            .UseEnvironment("Development")
-            //            .UseConfiguration(new ConfigurationBuilder()
-            //                .SetBasePath(projectDir)
-            //                .AddJsonFile("appsettings.json")
-            //                .AddEnvironmentVariables()
-            //                .Build()
-            //            )
-            //            .UseStartup<Api.Startup>()
-            //);
-            //server.BaseAddress = BaseHttpsUrl;
-            //_client = server.CreateClient();
+            apiClient = new BasketApiClient(BaseHttpsUrl);
         }
-
-        //public AuthTests(CustomWebApplicationFactory<BasketApp.Api.Startup> factory)
-        //{
-        //    _factory = factory;
-        //    _client = _factory.CreateClient(new WebApplicationFactoryClientOptions
-        //    {
-        //        AllowAutoRedirect = false,
-        //        BaseAddress = BaseHttpsUrl
-        //    });
-        //}
 
         [Fact]
         public async Task ValidCredentials()
         {
-            BasketApiClient apiClient = new BasketApiClient(BaseHttpsUrl);
-            //BasketApiClient apiClient = new BasketApiClient(_client);
+            //BasketApiClient apiClient = new BasketApiClient(_factory.CreateClient());
 
             var result = await apiClient.AuthenticateAsync(TestConstants.TesterUserName, TestConstants.TesterPassword);
 
@@ -58,8 +37,7 @@ namespace BasketApp.IntegrationTests
         [Fact]
         public async Task InvalidCredentialsAsync()
         {
-            BasketApiClient apiClient = new BasketApiClient(BaseHttpsUrl);
-            //BasketApiClient apiClient = new BasketApiClient(_client);
+            //BasketApiClient apiClient = new BasketApiClient(_factory.CreateClient());
 
             // TODO : proper validation on status code unauthorized
             await Assert.ThrowsAsync<HttpRequestException>(() => apiClient.AuthenticateAsync(TestConstants.TesterUserName, "invalidPW"));

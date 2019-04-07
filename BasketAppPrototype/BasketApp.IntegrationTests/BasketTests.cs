@@ -9,16 +9,18 @@ using System.Linq;
 namespace BasketApp.IntegrationTests
 {
     public class BasketTests
-        //: IClassFixture<CustomWebApplicationFactory<BasketApp.Api.Startup>>
     {
         public static readonly Uri BaseHttpsUrl = new Uri(TestConstants.BaseApiAddress);
+        readonly BasketApiClient apiClient;
 
-        BasketApiClient apiClient;
+        public BasketTests()
+        {
+            apiClient = new BasketApiClient(BaseHttpsUrl);
+        }
 
         [Fact]
         public async Task Basket_Operations_Test()
         {
-            apiClient = new BasketApiClient(BaseHttpsUrl);
             Assert.True(await apiClient.AuthenticateAsync(TestConstants.TesterUserName, TestConstants.TesterPassword));
 
             await apiClient.ClearBasketAsync();
@@ -67,37 +69,5 @@ namespace BasketApp.IntegrationTests
             basket = await apiClient.GetUserBasket();
             Assert.Empty(basket.Items);
         }
-
-        //[Fact]
-        //public async Task Get_User_Basket_Test()
-        //{
-        //    var basket = await apiClient.GetUserBasket();
-
-        //    //Assert.AreEqual(1, basket.Items.Count);
-        //}
-
-        //[Fact]
-        //public async Task Add_Item_to_Basket_Test()
-        //{
-
-        //}
-
-        //[Fact]
-        //public async Task Update_Items_on_Basket_Test()
-        //{
-
-        //}
-
-        //[Fact]
-        //public async Task Delete_Item_of_Basket_Test()
-        //{
-
-        //}
-
-        //[Fact]
-        //public async Task Clear_Basket_Test()
-        //{
-
-        //}
     }
 }
