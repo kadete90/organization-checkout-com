@@ -9,16 +9,17 @@
 * For the purpose of this exercise, you can assume there’s an existing data storage solution that the API will use, so you can either create stubs for that functionality or simply hold data in memory.
 * Create a client library that makes use of the API endpoints.  The purpose of this code to provide authors of client applications a simple framework to use in their applications.
 
-## 'Extra' features
-* Sqlite database with Migrations
-* IdentityUser & Authentication via JWT Bearer Token
-* Seed Test User and Products Data on Initialize WebHost
-
 ## Projects in the solution
-* BasketApp.Api - Prototype Basket REST API
+* BasketApp.Api - Prototype Basket REST API (with DAL)
 * BasketApp.Client - .NET client
 * BasketApp.Common - contracts and common utilities
 * BasketApp.IntegrationTests - simple integration tests with the use of BasketApp.Client
+
+## 'Extra' features
+* Sqlite database with Migrations (run Update-Database on BasketApp.Api)
+* IdentityUser & Authentication via JWT Bearer Token
+* Seed Test User and Products Data on Initialize WebHost
+* Added Serilog to have log files 
 
 ## Basket Api Endpoints
 * _post_    : api/account/token     : Generate JWT Token
