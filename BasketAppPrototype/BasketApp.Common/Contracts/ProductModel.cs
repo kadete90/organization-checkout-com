@@ -5,7 +5,7 @@ namespace BasketApp.Common.Contracts
 {
     public class ProductModel
     {
-        [JsonProperty(Order = 0, PropertyName = "ProductId")]
+        [JsonProperty(Order = 0, PropertyName = "productId")]
         public Guid Id { get; set; }
 
         [JsonProperty(Order = 1)]
@@ -23,7 +23,7 @@ namespace BasketApp.Common.Contracts
 
     public class ProductUpdateModel
     {
-        [JsonProperty(Order = 0, PropertyName = "ProductId")]
+        [JsonProperty(Order = 0, PropertyName = "productId")]
         public Guid Id { get; set; }
 
         [JsonProperty(Order = 2)]

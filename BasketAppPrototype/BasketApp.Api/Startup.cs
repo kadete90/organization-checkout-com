@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
+using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace BasketApp.Api
 {
@@ -20,6 +22,10 @@ namespace BasketApp.Api
     {
         public Startup(IConfiguration configuration)
         {
+            // Init Serilog configuration
+            Log.Logger = new LoggerConfiguration()
+                            .ReadFrom.Configuration(configuration)
+                            .CreateLogger();
             Configuration = configuration;
         }
 
@@ -76,16 +82,19 @@ namespace BasketApp.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseCors("cors");
             app.UseAuthentication();
 
+            loggerFactory.AddSerilog();
+
             if (env.IsDevelopment())
             {
+                Log.Information("In Development environment");
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-            }           
+            }
 
             app.UseMvc();
         }

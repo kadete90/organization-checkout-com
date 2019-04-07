@@ -4,6 +4,7 @@ using BasketApp.Api.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace BasketApp.Api.Controllers
 {
@@ -43,7 +44,11 @@ namespace BasketApp.Api.Controllers
             var token = _userService.GenerateToken(user);
             if (token == null)
             {
-                return Unauthorized(); // send internalServerError
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    new
+                    {
+                        error = "Error generating a jwt token"
+                    });
             }
 
             return Ok(new TokenModel

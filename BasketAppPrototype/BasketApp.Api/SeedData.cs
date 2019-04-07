@@ -8,6 +8,7 @@ using BasketApp.Api.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace BasketApp.Api
 {
@@ -17,14 +18,25 @@ namespace BasketApp.Api
 
         public static async Task InitializeAsync(IServiceProvider services)
         {
-            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-            await EnsureRolesAsync(roleManager);
+            var logger = services.GetRequiredService<ILogger<Program>>();
 
-            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-            await EnsureTestAdminAsync(userManager);
+            try
+            {
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                await EnsureRolesAsync(roleManager);
 
-            var context = services.GetRequiredService<ApplicationDbContext>();
-            await SeedProductsAsync(context);
+                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                await EnsureTestAdminAsync(userManager);
+
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                await SeedProductsAsync(context);
+
+                logger.LogInformation("Seeded the database.");
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "Error seeding database");
+            }
         }
 
         private static async Task EnsureRolesAsync(RoleManager<IdentityRole> roleManager)

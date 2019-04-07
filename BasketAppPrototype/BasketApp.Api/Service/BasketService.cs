@@ -7,6 +7,7 @@ using BasketApp.Api.Data.Entities;
 using BasketApp.Api.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace BasketApp.Api.Service
 {
@@ -24,10 +25,12 @@ namespace BasketApp.Api.Service
     public class BasketService : IBasketService
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<BasketService> _logger;
 
-        public BasketService(ApplicationDbContext context)
+        public BasketService(ApplicationDbContext context, ILogger<BasketService> looger)
         {
             _context = context;
+            _logger = looger;
         }
 
         public async Task<BasketModel> GetAsync(IdentityUser user)
@@ -85,7 +88,7 @@ namespace BasketApp.Api.Service
             }
             catch (Exception e)
             {
-                // TODO : Add log
+                _logger.LogError(e, $"Error {(basketItem == null ? "Adding" : "Updading")} item to user basket");
                 return false;
             }
 
@@ -111,7 +114,7 @@ namespace BasketApp.Api.Service
             }
             catch (Exception e)
             {
-                // TODO : Add log
+                _logger.LogError(e, $"Error removing item '{itemId}' from user basket");
                 return false;
             }
 
@@ -127,7 +130,7 @@ namespace BasketApp.Api.Service
                 return true;
             }
 
-            userBasket.BasketItems.Clear(); // TODO check if works
+            userBasket.BasketItems.Clear();
 
             try
             {
@@ -135,7 +138,7 @@ namespace BasketApp.Api.Service
             }
             catch (Exception e)
             {
-                // TODO : Add log
+                _logger.LogError(e, $"Error on clear items from user basket");
                 return false;
             }
 

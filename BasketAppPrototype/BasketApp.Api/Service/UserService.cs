@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using BasketApp.Api.Helpers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -16,12 +17,13 @@ namespace BasketApp.Api.Service
 
     public class AccountService : IAccountService
     {
-
         private readonly AppSettings _appSettings;
+        private readonly ILogger<AccountService> _logger;
 
-        public AccountService(IOptions<AppSettings> appSettings)
+        public AccountService(IOptions<AppSettings> appSettings, ILogger<AccountService> looger)
         {
             _appSettings = appSettings.Value;
+            _logger = looger;
         }
 
         public string GenerateToken(IdentityUser user)
@@ -52,8 +54,8 @@ namespace BasketApp.Api.Service
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e, $"Error generating jwt token");
+                return null;
             }           
         }
     }
