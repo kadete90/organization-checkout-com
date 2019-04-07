@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BasketApp.Common.Contracts;
-using BasketApp.Api.DAL.Entities;
+using BasketApp.DAL.Entities;
 
 namespace BasketApp.Api.Utils
 {

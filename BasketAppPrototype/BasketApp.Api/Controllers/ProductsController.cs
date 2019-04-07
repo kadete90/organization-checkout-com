@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using BasketApp.Common.Contracts;
-using BasketApp.Api.DAL;
+using BasketApp.DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

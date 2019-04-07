@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BasketApp.Api.DAL.Entities
+namespace BasketApp.DAL.Entities
 {
     public class Basket
     {

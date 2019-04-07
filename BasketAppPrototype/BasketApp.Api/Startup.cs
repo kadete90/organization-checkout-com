@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using BasketApp.Api.DAL;
+using BasketApp.DAL;
 using BasketApp.Common.Contracts.Settings;
 using BasketApp.Api.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

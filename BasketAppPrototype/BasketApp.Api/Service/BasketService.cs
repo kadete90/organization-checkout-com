@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BasketApp.Common.Contracts;
-using BasketApp.Api.DAL;
-using BasketApp.Api.DAL.Entities;
 using BasketApp.Api.Utils;
+using BasketApp.DAL;
+using BasketApp.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

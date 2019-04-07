@@ -1,9 +1,9 @@
-﻿using BasketApp.Api.DAL.Entities;
+﻿using BasketApp.DAL.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace BasketApp.Api.DAL
+namespace BasketApp.DAL
 {
     public class ApplicationDbContext : IdentityDbContext
     {
