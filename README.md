@@ -21,6 +21,7 @@
 * IdentityUser & Authentication via JWT Bearer Token
 * Seed Test User and Products Data on Initialize WebHost
 * Added Serilog to have log files 
+* MemoryCache on Get Products(_Controller_)
 
 ## Basket Api Endpoints
 * _post_    : api/account/token     : Generate JWT Token
