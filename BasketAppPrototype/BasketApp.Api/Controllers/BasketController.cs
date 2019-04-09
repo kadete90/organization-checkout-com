@@ -26,7 +26,6 @@ namespace BasketApp.Api.Controllers
         // GET api/basket
         [HttpGet]
         [ProducesResponseType(typeof(BasketModel), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Get()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -40,10 +39,15 @@ namespace BasketApp.Api.Controllers
 
         // POST api/basket/items
         [HttpPost("items")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddItemToBasket([FromBody] ProductUpdateModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null)
             {
@@ -53,7 +57,7 @@ namespace BasketApp.Api.Controllers
             var result = await _basketService.AddOrUpdateItemAsync(model.Id, model.Amount, currentUser);
             if (result == null)
             {
-                return NotFound("This item doesn't exist");
+                return BadRequest("This item doesn't exist");
             }
 
             return Ok("Item updated with success!");
@@ -61,11 +65,16 @@ namespace BasketApp.Api.Controllers
 
         // PUT api/basket/items/guid
         [HttpPut("items/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateItemAmountInBasket(Guid id, [FromBody] ProductUpdateModel model)
         {
-            if(id != model.Id)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != model.Id)
             {
                 return BadRequest();
             }
@@ -79,7 +88,7 @@ namespace BasketApp.Api.Controllers
             var result = await _basketService.AddOrUpdateItemAsync(id, model.Amount, currentUser);
             if (result == null)
             {
-                return NotFound("This item doesn't exist");
+                return BadRequest("This item doesn't exist");
             }
 
             return Ok("Item updated with success!");
@@ -88,7 +97,7 @@ namespace BasketApp.Api.Controllers
         // DELETE api/basket/items/guid
         [HttpDelete("items/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RemoveItemFromBasket(Guid id)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -100,7 +109,7 @@ namespace BasketApp.Api.Controllers
             var result = await _basketService.RemoveItemAsync(id, currentUser);
             if (result == null)
             {
-                return NotFound("This item doesn't exist in the basket");
+                return BadRequest("This item doesn't exist in the basket");
             }
 
             return Ok("Item removed with success!");
@@ -108,8 +117,8 @@ namespace BasketApp.Api.Controllers
 
         // DELETE api/basket/clear
         [HttpDelete("clear")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ClearBasket()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -118,12 +127,12 @@ namespace BasketApp.Api.Controllers
                 return Challenge();
             }
 
-            if (await _basketService.ClearAsync(currentUser))
+            if (!await _basketService.ClearAsync(currentUser))
             {
-                return Ok("User Basket cleared");
+                return BadRequest();
             }
-
-            return BadRequest();
+               
+            return Accepted("User Basket cleared");
         }
     }
 }

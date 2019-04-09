@@ -26,6 +26,8 @@ namespace BasketApp.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("token")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetToken([FromBody] CredentialsModel model)
         {
             if (!ModelState.IsValid)
