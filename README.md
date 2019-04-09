@@ -23,6 +23,7 @@
 * Serilog to have log files 
 * MemoryCache on Get Products(_Controller_)
 * HealthChecks
+* Swagger / OpenAPI endpoint documentation
 
 ## Basket Api Endpoints
 * _post_    : api/account/token     : Generate JWT Token
@@ -33,6 +34,7 @@
 * _delete_  : api/basket/items/{id} : Remove item from the Auth User Basket
 * _delete_  : api/basket/clear      : Clears all items from the Auth User basket
 * _get_     : api/healthcheck       : For reporting the health of app infrastructure components
+* _get_     : api/swagger           : Endpoint & models documentation
 
 ## ApiClient
 * AuthenticateAsync: adds token as a header of internal httpClient
