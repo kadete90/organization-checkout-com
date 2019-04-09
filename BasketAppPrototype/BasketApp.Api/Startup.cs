@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
+using System.Threading.Tasks;
 using BasketApp.DAL;
 using BasketApp.Common.Contracts.Settings;
 using BasketApp.Api.Service;
@@ -127,6 +128,17 @@ namespace BasketApp.Api
                     context.Response.ContentType = MediaTypeNames.Application.Json;
                     await context.Response.WriteAsync(result);
                 }
+            });
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.OnStarting(() =>
+                {
+                    context.Response.Headers.Add("X-Powered-By", @"Flavio Cadete @ 2019");
+                    return Task.CompletedTask;
+                });
+
+                await next.Invoke();
             });
 
             app.UseMvc();
