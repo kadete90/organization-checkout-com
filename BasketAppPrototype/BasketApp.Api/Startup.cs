@@ -22,6 +22,7 @@ using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
 using Newtonsoft.Json;
 using Serilog;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace BasketApp.Api
 {
@@ -94,6 +95,11 @@ namespace BasketApp.Api
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IBasketService, BasketService>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Basket.API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -139,6 +145,13 @@ namespace BasketApp.Api
                 });
 
                 await next.Invoke();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API V1");
             });
 
             app.UseMvc();
