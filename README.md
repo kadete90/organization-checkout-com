@@ -20,8 +20,9 @@
 * Sqlite database with Migrations (run Update-Database on BasketApp.Api)
 * IdentityUser & Authentication via JWT Bearer Token
 * Seed Test User and Products Data on Initialize WebHost
-* Added Serilog to have log files 
+* Serilog to have log files 
 * MemoryCache on Get Products(_Controller_)
+* HealthChecks
 
 ## Basket Api Endpoints
 * _post_    : api/account/token     : Generate JWT Token
@@ -31,6 +32,7 @@
 * _put_     : api/basket/items/{id} : Update amount of product in the Auth User Basket
 * _delete_  : api/basket/items/{id} : Remove item from the Auth User Basket
 * _delete_  : api/basket/clear      : Clears all items from the Auth User basket
+* _get_     : api/healthcheck       : For reporting the health of app infrastructure components
 
 ## ApiClient
 * AuthenticateAsync: adds token as a header of internal httpClient
