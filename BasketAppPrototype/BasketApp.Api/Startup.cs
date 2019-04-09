@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Linq;
+using System.Net.Mime;
+using System.Text;
 using BasketApp.DAL;
 using BasketApp.Common.Contracts.Settings;
 using BasketApp.Api.Service;
@@ -8,12 +11,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using AutoMapper;
+using Newtonsoft.Json;
 using Serilog;
-using Microsoft.Extensions.Logging;
 
 namespace BasketApp.Api
 {
@@ -43,6 +50,11 @@ namespace BasketApp.Api
                     options.OutputFormatters.RemoveType<XmlSerializerOutputFormatter>();
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<ApplicationDbContext>()
+                .AddCheck("Foo", () => HealthCheckResult.Healthy("Foo is OK!"), tags: new[] { "foo_tag" })
+                .AddCheck("Bar", () => HealthCheckResult.Unhealthy("Bar is unhealthy!"), tags: new[] { "bar_tag" });
 
             services.AddDbContext<ApplicationDbContext>()
                 .AddEntityFrameworkProxies();
@@ -97,6 +109,25 @@ namespace BasketApp.Api
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
+
+            app.UseHealthChecks("/healthcheck", new HealthCheckOptions
+            {
+                ResponseWriter = async (context, report) =>
+                {
+                    var result = JsonConvert.SerializeObject(
+                        new
+                        {
+                            status = report.Status.ToString(),
+                            errors = report.Entries.Select(e => new
+                                {
+                                    key = e.Key,
+                                    value = $"{Enum.GetName(typeof(HealthStatus), e.Value.Status)}, {e.Value.Description}"
+                                })
+                        });
+                    context.Response.ContentType = MediaTypeNames.Application.Json;
+                    await context.Response.WriteAsync(result);
+                }
+            });
 
             app.UseMvc();
         }
