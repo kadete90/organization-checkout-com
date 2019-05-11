@@ -148,6 +148,7 @@ namespace BasketApp.Api.Service
         private async Task<Basket> _getBasketAsync(string id)
         {
             return await _context.Baskets
+                .TagWith("Get Basket Query")
                 .Include(b => b.BasketItems)
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
